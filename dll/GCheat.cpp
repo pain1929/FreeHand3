@@ -131,6 +131,8 @@ void GCheat::init() {
         throw std::runtime_error(xorstr_("gui inited failed"));
     }
 
+    this->title = xorstr_("自由之手3");
+
 }
 
 void GCheat::remove() {

@@ -217,7 +217,7 @@ void MainMenu::render() {
     static heads tab{ rage };
     static sub_heads subtab{ general };
 
-    const char* tab_name = tab == rage ? "FreeHand4" : tab == antiaim ? "Anti-aim" : tab == visuals ? "Visuals" : tab == settings ? "Settings" : tab == skins ? "Skins" : tab == configs ? "Configs" : tab == scripts ? "Scripts" : 0;
+    const char* tab_name = tab == rage ? "FreeHand3" : tab == antiaim ? "Anti-aim" : tab == visuals ? "Visuals" : tab == settings ? "Settings" : tab == skins ? "Skins" : tab == configs ? "Configs" : tab == scripts ? "Scripts" : 0;
     const char* tab_icon = tab == rage ? "B" : tab == antiaim ? "C" : tab == visuals ? "D" : tab == settings ? "E" : tab == skins ? "F" : tab == configs ? "G" : tab == scripts ? "H" : 0;
 
     static bool boolean, boolean_1 = false;

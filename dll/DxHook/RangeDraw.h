@@ -12,6 +12,7 @@ public:
         static auto red = IM_COL32(255, 0, 0, 255);
 
         auto size = ImGui::GetIO().DisplaySize;
+        g_cheat->screenCenter = {size.x / 2 , size.y / 2};
         auto list = ImGui::GetBackgroundDrawList();
 
         if (HotKeys::weapon.aimbot || HotKeys::weapon.lockaim) {

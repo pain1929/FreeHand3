@@ -27,7 +27,10 @@ ModuleManager::ModuleManager() {
 	
 
 	cheatFunctions = {
-
+		new CheatFunction(&HotKeys::player.flyMode , "飞行模式"),
+		new CheatFunction(&HotKeys::weapon.aimbot , "静默自瞄"),
+		new CheatFunction(&HotKeys::weapon.infAmmo , "无限子弹"),
+		new CheatFunction(&HotKeys::weapon.noSpread , "无扩散")
 	};
 
 
