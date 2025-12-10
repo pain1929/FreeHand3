@@ -120,18 +120,34 @@ void GCheat::init() {
     this->title = xorstr_("正在初始化钩子...");
     IHook::init();
     this->title = xorstr_("初始化完成等待中...");
-    //hooks::Init();
-    hooks_dx11::Init();
 
-    if (WaitForInitialization(hooks_dx11::IsInitialized , 50 , 300))
-    {
-        globals::activeBackend = globals::Backend::DX11;
-    }
-    else {
-        throw std::runtime_error(xorstr_("gui inited failed"));
+
+
+
+    auto apiName = g_cheat->engine->GameUserSettings->GetPreferredGraphicsAPI().ToString();
+    if (apiName == "DX12") {
+        hooks::Init();
+        if (WaitForInitialization(d3d12hook::IsInitialized , 50 , 300))
+        {
+            globals::activeBackend = globals::Backend::DX12;
+        }
+        else {
+            throw std::runtime_error(xorstr_("gui inited failed dx12"));
+        }
+    } else {
+        //初始化11
+        hooks_dx11::Init();
+
+        if (WaitForInitialization(hooks_dx11::IsInitialized , 50 , 300))
+        {
+            globals::activeBackend = globals::Backend::DX11;
+        }
+        else {
+            throw std::runtime_error(xorstr_("gui inited failed dx11"));
+        }
     }
 
-    this->title = xorstr_("自由之手3");
+    this->title = std::string(xorstr_("自由之手3 ")) + (globals::activeBackend == globals::Backend::DX11 ? "DX11 " : "DX12 ") + CURRENT_VERSION;
 
 }
 
