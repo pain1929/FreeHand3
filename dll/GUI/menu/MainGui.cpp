@@ -7,6 +7,7 @@
 #include "util/Keys.hpp"
 #include "HUD.hpp"
 #include "HotKeys.h"
+#include "ModuleManager.hpp"
 //namespace fonts
 ImFont* medium;
 ImFont* bold;
@@ -272,7 +273,9 @@ void MainMenu::render() {
                     ImGui::SetCursorPos({ 226, 16 });
                     e_elements::begin_child("武器修改", ImVec2(240, 280)); {
                         PushFont(chinese_font);
-
+                        ImGui::Checkbox("无限子弹" , &HotKeys::weapon.infAmmo);
+                        ImGui::SliderInt("伤害倍率" , &HotKeys::weapon.damageMu , 1 , 10);
+                        ImGui::SliderInt("射速倍率" , &HotKeys::weapon.fireSpeedMu , 1 , 10);
                         PopFont();
                     }
                     e_elements::end_child();
@@ -280,7 +283,7 @@ void MainMenu::render() {
                     ImGui::SetCursorPos({ 226, 310 });
                     e_elements::begin_child("视觉", ImVec2(240, 300)); {
                         PushFont(chinese_font);
-
+                        ImGui::Checkbox("高亮" , &HotKeys::visual.highLight);
                         PopFont();
                     }
                     e_elements::end_child();
@@ -290,7 +293,11 @@ void MainMenu::render() {
                     ImGui::SetCursorPos({ 476, 16 });
                     e_elements::begin_child("自瞄", ImVec2(240, 280)); {
                         PushFont(chinese_font);
-
+                        ImGui::Checkbox("自瞄" , &HotKeys::weapon.aimbot);
+                        if (HotKeys::weapon.aimbot) {
+                            ImGui::SliderFloat("瞄准范围" , &HotKeys::weapon.aimRange , 10 , 300);
+                        }
+                        ImGui::Checkbox("无扩散" , &HotKeys::weapon.noSpread);
                         PopFont();
                     }
                     e_elements::end_child();
@@ -298,7 +305,9 @@ void MainMenu::render() {
                     ImGui::SetCursorPos({ 476, 310 });
                     e_elements::begin_child("角色修改", ImVec2(240, 300)); {
                         PushFont(chinese_font);
-
+                        ImGui::Checkbox("飞行模式" , &HotKeys::player.flyMode);
+                        ImGui::SliderInt("移动速度倍率" , &HotKeys::player.walkSpeedMu , 1, 10);
+                        ImGui::SliderInt("飞行速度倍率" , &HotKeys::player.flySpeedMu , 1, 10);
                         PopFont();
                     }
                     e_elements::end_child();
@@ -307,19 +316,10 @@ void MainMenu::render() {
                 }
                 case accuracy : {
                     ImGui::SetCursorPos({ 226, 16 });
-                    e_elements::begin_child("爆率修改", ImVec2(240, 550)); {
+                    e_elements::begin_child("暂无内容", ImVec2(240, 550)); {
                         FontGuard f(chinese_font);
                     }
                     e_elements::end_child();
-
-                    ImGui::SetCursorPos({ 476, 16 });
-                    e_elements::begin_child("游戏事件", ImVec2(240, 550)); {
-                        PushFont(chinese_font);
-
-                        PopFont();
-                    }
-                    e_elements::end_child();
-
 
                     break;
                 }

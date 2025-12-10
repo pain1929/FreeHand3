@@ -82,7 +82,16 @@ add_library(${PROJECT_NAME} SHARED DllMain.cpp
         GUI/imgui_helper.hpp
         GUI/imgui_helper.cpp
         GUI/menu/MainGui.hpp
-        GUI/menu/MainGui.cpp)
+        GUI/menu/MainGui.cpp
+        CppSDK/SDK/Basic.cpp
+        CppSDK/SDK/CoreUObject_functions.cpp
+        CppSDK/SDK/OakGame_functions.cpp
+        CppSDK/SDK/Engine_functions.cpp
+        hooks/PostRender.hpp
+        hooks/GetViewAngle.hpp
+        hooks/Shoot.hpp
+        DxHook/RangeDraw.h
+)
 
 
 target_link_libraries(${PROJECT_NAME}

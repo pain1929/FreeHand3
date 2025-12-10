@@ -10,6 +10,7 @@
 #include "DxHook/NamePainter.h"
 #include "../lib/pattern_scan.hpp"
 #include "HotKeys.h"
+#include "utils/NamePool.hpp"
 GCheat * g_cheat = new GCheat;
 
 using IsInitFn = bool (*)();
@@ -44,11 +45,13 @@ static void* GetRipRelativeAddress(void* instruction_ptr)
 }
 
 void GCheat::engineInit() {
-
+    NamePool::init();
+    engine = SDK::UEngine::GetEngine();
 }
 
 
 void GCheat::drawInit() {
+    IDraw::init();
 }
 
 
@@ -117,11 +120,12 @@ void GCheat::init() {
     this->title = xorstr_("正在初始化钩子...");
     IHook::init();
     this->title = xorstr_("初始化完成等待中...");
-    hooks::Init();
+    //hooks::Init();
+    hooks_dx11::Init();
 
-    if (WaitForInitialization(d3d12hook::IsInitialized , 50 , 300))
+    if (WaitForInitialization(hooks_dx11::IsInitialized , 50 , 300))
     {
-        globals::activeBackend = globals::Backend::DX12;
+        globals::activeBackend = globals::Backend::DX11;
     }
     else {
         throw std::runtime_error(xorstr_("gui inited failed"));

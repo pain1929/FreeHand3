@@ -18,6 +18,8 @@ public:
 
     virtual ~IDraw() = default;
     virtual void draw() = 0;
+
+    static void init();
 };
 
 

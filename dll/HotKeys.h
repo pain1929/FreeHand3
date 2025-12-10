@@ -3,23 +3,68 @@
 #include <fstream>
 #include <sstream>
 #include <nlohmann/json.hpp>
-#include "ModuleManager.hpp"
 using Json = nlohmann::json;
 
+
+struct User {
+    std::string username;
+    std::string password;
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(User , username , password)
+};
+
 struct Misc {
-    std::map<std::string , int> bindKeys;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Misc  , bindKeys)
+    std::string serverIp;
+    bool showHUD = true;
+    float HUDY = 0;
+    bool blockFire {false};
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Misc , HUDY , blockFire)
+};
+
+struct Weapon {
+    bool aimbot {false}; //!<瞄准辅助
+    bool lockaim{false}; //!<锁定瞄准
+    float aimRange{100.f}; //!<瞄准范围
+    bool infAmmo {false}; //!<无限子弹
+    bool noSpread {false}; //!<无扩散
+    int damageMu{1};   //!<伤害倍率
+    int fireSpeedMu{1}; //!<射速倍率
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Weapon , aimbot , lockaim , aimRange , infAmmo , noSpread,damageMu,fireSpeedMu)
+};
+
+struct Visual {
+    bool highLight{false};//!<高亮
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Visual , highLight)
+};
+
+
+struct Player {
+    bool flyMode{false};
+    int walkSpeedMu{1}; //!<移动速度倍率
+    int flySpeedMu{1}; //!<飞行速度倍率
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Player , flyMode  , walkSpeedMu , flySpeedMu)
 };
 
 
 struct GameCfg {
-    Misc  misc;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(GameCfg,misc)
+    User user;
+    Misc misc;
+    Weapon weapon;
+    Player player;
+    Visual visual;
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(GameCfg , user , misc , weapon , player , visual)
 };
 
 
 namespace HotKeys {
+    namespace Menu {
+        inline bool showMenu = false;
+    }
+
+    inline User user;
     inline Misc misc;
+    inline Weapon weapon;
+    inline Player player;
+    inline Visual visual;
 
     namespace Cfg {
         inline std::wstring G_CfgPath = L"./freeHand.cfg";
@@ -48,17 +93,12 @@ namespace HotKeys {
                 if (f.is_open()) {
                     Json data = Json::parse(f);
                     GameCfg config = data.get<GameCfg>();
+
+                    visual = config.visual;
+                    weapon = config.weapon;
+                    player = config.player;
+                    user = config.user;
                     misc = config.misc;
-
-
-                    //加载快捷键
-                    for (const auto & pair : misc.bindKeys) {
-                        auto cheatFunc = ModuleManager::i().mapping[pair.first];
-                        if (cheatFunc) {
-                            cheatFunc->setKeyBind(pair.second);
-                        }
-                    }
-
                 }
             }
             catch (const std::exception& e) {
@@ -69,11 +109,11 @@ namespace HotKeys {
         inline void SaveCfg() {
             try {
                 GameCfg cfg;
+                cfg.visual = visual;
+                cfg.weapon = weapon;
+                cfg.player = player;
+                cfg.user = user;
                 cfg.misc = misc;
-                //保存快捷键
-                for (const auto & m : ModuleManager::i().mapping) {
-                    cfg.misc.bindKeys[m.first] = m.second->getKeyBind()->key;
-                }
 
                 Json json = cfg;
                 WriteFileStr(G_CfgPath, json.dump());

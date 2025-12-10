@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(cheat_template VERSION 1.0.0)
+project(FreeHand3 VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD  20)
 if (MSVC)

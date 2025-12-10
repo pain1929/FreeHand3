@@ -11,6 +11,13 @@ class GCheat {
     void engineInit();
     void drawInit();
 public:
+    SDK::UEngine * engine;
+    SDK::AOakCharacter * character{};
+    SDK::AOakPlayerController * controller{};
+    SDK::FVector2D screenCenter{}; //!<屏幕中心
+    SDK::FVector bestTargetPos{};
+    SDK::FVector2D bestTargetScreen{};
+
     std::string title = xorstr_("cheat template");
     void init();
     void remove();

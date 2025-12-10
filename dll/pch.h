@@ -11,3 +11,9 @@
 #include <polyhook2/Enums.hpp>
 #include <MinHook.h>
 #include <iostream>
+#include "SDK/Basic.hpp"
+#include "SDK/Engine_classes.hpp"
+#include "SDK/Engine_structs.hpp"
+#include "SDK/OakGame_classes.hpp"
+#include "SDK/OakGame_structs.hpp"
+#include "SDK/BPChar_Enemy_classes.hpp"
