@@ -4,7 +4,7 @@
 #include <queue>
 #include "HotKeys.h"
 #include "GCheat.h"
-
+#include <mutex>
 
 class EspDraw : public IDraw {
 

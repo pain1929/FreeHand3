@@ -104,9 +104,6 @@ target_link_libraries(${PROJECT_NAME}
         winmm.lib
         ${ZLIB_LIB}
         cryptopp::cryptopp
-        PolyHook_2::PolyHook_2
-        Zydis::Zydis
-        asmjit::asmtk
         minhook::minhook
         freetyped.lib
 )

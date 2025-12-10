@@ -7,8 +7,6 @@
 #include <d3d12.h>
 #include "Memory/Memory.h"
 #include "../vmp/VMProtectSDK.h"
-#include <polyhook2/Detour/x64Detour.hpp>
-#include <polyhook2/Enums.hpp>
 #include <MinHook.h>
 #include <iostream>
 #include "SDK/Basic.hpp"
