@@ -15,15 +15,14 @@ public:
         g_cheat->screenCenter = {size.x / 2 , size.y / 2};
         auto list = ImGui::GetBackgroundDrawList();
 
-        if (HotKeys::weapon.aimbot || HotKeys::weapon.lockaim) {
-
-            auto &bestScreen = g_cheat->bestTargetScreen;
-            auto hasTarget = bestScreen.X != 0 && bestScreen.Y != 0;
+        auto &bestScreen = g_cheat->bestTargetScreen;
+        auto hasTarget = bestScreen.X != 0 && bestScreen.Y != 0;
+        if (HotKeys::visual.showRange  &&  (HotKeys::weapon.aimbot || HotKeys::weapon.lockaim ) ) {
             list->AddCircle(size / 2 , HotKeys::weapon.aimRange,hasTarget ? red : white);
-            if (hasTarget) {
-                list->AddLine({bestScreen.X , bestScreen.Y} , size / 2 , red);
-            }
+        }
 
+        if (HotKeys::visual.targetPoint &&  hasTarget) {
+            list->AddLine({bestScreen.X , bestScreen.Y} , size / 2 , red);
         }
     }
 };

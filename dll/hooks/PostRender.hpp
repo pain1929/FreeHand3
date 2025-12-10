@@ -1,4 +1,5 @@
 #pragma once
+#include "EspDraw.hpp"
 #include "IHook.h"
 #include "NamePainter.h"
 #include "HotKeys.h"
@@ -135,6 +136,8 @@ inline void __fastcall Hook_Render(SDK::UGameViewportClient * viewport , SDK::UC
         SDK::FVector bestTargetPos{};
         float distanceToCenter{10000.f};
         bool findOut{false};
+
+        std::list<EspDraw::Obj> espObjs;
         for (const auto &actor: level->Actors) {
             if (!actor) continue;
             if (actor == oakCharacter) continue;
@@ -181,31 +184,45 @@ inline void __fastcall Hook_Render(SDK::UGameViewportClient * viewport , SDK::UC
 
 
                 //检查命中
-                if (!IsHit(pos, world, g_cheat->controller->PlayerCameraManager->GetCameraLocation())) {
-                    continue;
+                auto isHit = IsHit(pos, world, g_cheat->controller->PlayerCameraManager->GetCameraLocation());
+
+
+                if (HotKeys::visual.targetPointVis &&  pos.X !=0 && pos.Y !=0) {
+                    SDK::FVector2D screen{};
+                    if (controller->ProjectWorldLocationToScreen(pos, &screen, false, false)) {
+                        espObjs.push_back(EspDraw::Obj{isHit , {screen.X , screen.Y}});
+                    }
+
                 }
 
 
 
-                SDK::FVector2D screen{};
-                if (controller->ProjectWorldLocationToScreen(pos, &screen, false, false)) {
-                    //检查范围
-                    if (!IN_RANGE(screen.X, 0, g_cheat->screenCenter.X * 2) ||
-                        !IN_RANGE(screen.Y, 0, g_cheat->screenCenter.Y * 2)) {
-                        continue;
-                        }
+                if (isHit ) {
+                    SDK::FVector2D screen{};
+                    if (controller->ProjectWorldLocationToScreen(pos, &screen, false, false)) {
+                        //检查范围
+                        if (!IN_RANGE(screen.X, 0, g_cheat->screenCenter.X * 2) ||
+                            !IN_RANGE(screen.Y, 0, g_cheat->screenCenter.Y * 2)) {
+                            continue;
+                            }
 
-                    //范围校验
-                    auto dis = screen.GetDistanceTo(g_cheat->screenCenter);
-                    if (dis < distanceToCenter && dis < HotKeys::weapon.aimRange) {
-                        distanceToCenter = dis;
-                        bestTarget = screen;
-                        bestTargetPos = pos;
-                        findOut = true;
+                        //范围校验
+                        auto dis = screen.GetDistanceTo(g_cheat->screenCenter);
+                        if (dis < distanceToCenter && dis < HotKeys::weapon.aimRange) {
+                            distanceToCenter = dis;
+                            bestTarget = screen;
+                            bestTargetPos = pos;
+                            findOut = true;
+                        }
                     }
                 }
+
+
+
             }
         }
+
+        GEspDraw->push(espObjs);
 
 
         if (findOut) {

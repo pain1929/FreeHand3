@@ -22,9 +22,7 @@ inline __int64 __fastcall Hook_Angle(SDK::AWeapon * weapon, SDK::FRotator * view
 
     //判断如果这个枪是主角的枪那么自瞄
     if (weapon->Owner == g_cheat->character) {
-        std::cout <<"cha\n";
         //静默单机有效
-        std::cout <<g_cheat->bestTargetPos.X <<" " << g_cheat->bestTargetPos.Y << std::endl;
         if (g_cheat->bestTargetPos.X != 0 && g_cheat->bestTargetPos.Y != 0 &&
             HotKeys::weapon.aimbot) {
             auto cam = g_cheat->controller->PlayerCameraManager;

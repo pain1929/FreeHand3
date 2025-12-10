@@ -23,17 +23,20 @@ struct Misc {
 struct Weapon {
     bool aimbot {false}; //!<瞄准辅助
     bool lockaim{false}; //!<锁定瞄准
-    float aimRange{100.f}; //!<瞄准范围
+    float aimRange{100.f}; //!<瞄准范
     bool infAmmo {false}; //!<无限子弹
     bool noSpread {false}; //!<无扩散
     int damageMu{1};   //!<伤害倍率
     int fireSpeedMu{1}; //!<射速倍率
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Weapon , aimbot , lockaim , aimRange , infAmmo , noSpread,damageMu,fireSpeedMu)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Weapon , aimbot , lockaim , aimRange ,  infAmmo , noSpread,damageMu,fireSpeedMu)
 };
 
 struct Visual {
     bool highLight{false};//!<高亮
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Visual , highLight)
+    bool showRange{false};
+    bool targetPoint{false};
+    bool targetPointVis{false};
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Visual , highLight,showRange , targetPoint , targetPointVis)
 };
 
 

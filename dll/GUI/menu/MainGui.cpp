@@ -284,6 +284,10 @@ void MainMenu::render() {
                     e_elements::begin_child("视觉", ImVec2(240, 300)); {
                         PushFont(chinese_font);
                         ImGui::Checkbox("高亮" , &HotKeys::visual.highLight);
+                        ImGui::Checkbox("显示瞄准范围" , &HotKeys::visual.showRange);
+                        ImGui::Checkbox("显示锁定目标" , &HotKeys::visual.targetPoint);
+                        ImGui::Checkbox("指示目标" , &HotKeys::visual.targetPointVis);
+
                         PopFont();
                     }
                     e_elements::end_child();

@@ -30,7 +30,10 @@ ModuleManager::ModuleManager() {
 		new CheatFunction(&HotKeys::player.flyMode , "飞行模式"),
 		new CheatFunction(&HotKeys::weapon.aimbot , "静默自瞄"),
 		new CheatFunction(&HotKeys::weapon.infAmmo , "无限子弹"),
-		new CheatFunction(&HotKeys::weapon.noSpread , "无扩散")
+		new CheatFunction(&HotKeys::weapon.noSpread , "无扩散"),
+		new CheatFunction(&HotKeys::visual.showRange , "显示瞄准范围"),
+		new CheatFunction(&HotKeys::visual.targetPoint , "显示自瞄目标"),
+		new CheatFunction(&HotKeys::visual.targetPointVis , "显示目标指向")
 	};
 
 

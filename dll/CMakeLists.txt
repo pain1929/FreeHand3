@@ -91,6 +91,8 @@ add_library(${PROJECT_NAME} SHARED DllMain.cpp
         hooks/GetViewAngle.hpp
         hooks/Shoot.hpp
         DxHook/RangeDraw.h
+        DxHook/EspDraw.hpp
+        DxHook/EspDraw.cpp
 )
 
 
