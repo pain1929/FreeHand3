@@ -1,0 +1,13 @@
+#pragma once
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include <Windows.h>
+#include "xorstr.hpp"
+#include "imgui.h"
+#include "imgui_internal.h"
+#include <d3d12.h>
+#include "Memory/Memory.h"
+#include "../vmp/VMProtectSDK.h"
+#include <polyhook2/Detour/x64Detour.hpp>
+#include <polyhook2/Enums.hpp>
+#include <MinHook.h>
+#include <iostream>
