@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <nlohmann/json.hpp>
+#include "GUI/ModuleManager.hpp"
 using Json = nlohmann::json;
 
 
@@ -103,6 +104,19 @@ namespace HotKeys {
                     user = config.user;
                     misc = config.misc;
                 }
+
+                std::ifstream keys("keys");
+                if (keys.is_open()) {
+                    Json data = Json::parse(keys);
+                    auto mapping = data.get<std::map<std::string , int>>();
+                    for (const auto & pair : mapping) {
+                        auto cheatFunc = ModuleManager::i().mapping[pair.first];
+                        if (cheatFunc) {
+                            cheatFunc->setKeyBind(pair.second);
+                        }
+                    }
+                }
+
             }
             catch (const std::exception& e) {
                 std::cerr << e.what() << std::endl;
@@ -120,6 +134,14 @@ namespace HotKeys {
 
                 Json json = cfg;
                 WriteFileStr(G_CfgPath, json.dump());
+
+                std::map<std::string , int> map;
+                for (const auto & cheatFunc :  ModuleManager::i().cheatFunctions) {
+                    map[cheatFunc->getName()] = cheatFunc->getKeyBind()->key;
+                }
+                Json j = map;
+                WriteFileStr(L"keys" , j.dump());
+
             }
             catch (const std::exception& e) {
                 std::cerr << e.what() << std::endl;
