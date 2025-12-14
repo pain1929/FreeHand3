@@ -26,8 +26,8 @@ struct Weapon {
     float aimRange{100.f}; //!<瞄准范
     bool infAmmo {false}; //!<无限子弹
     bool noSpread {false}; //!<无扩散
-    int damageMu{1};   //!<伤害倍率
-    int fireSpeedMu{1}; //!<射速倍率
+    float damageMu{1};   //!<伤害倍率
+    float fireSpeedMu{1}; //!<射速倍率
     NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Weapon , aimbot , lockaim , aimRange ,  infAmmo , noSpread,damageMu,fireSpeedMu)
 };
 

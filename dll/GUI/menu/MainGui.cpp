@@ -274,8 +274,8 @@ void MainMenu::render() {
                     e_elements::begin_child("武器修改", ImVec2(240, 280)); {
                         PushFont(chinese_font);
                         ImGui::Checkbox("无限子弹" , &HotKeys::weapon.infAmmo);
-                        ImGui::SliderInt("伤害倍率" , &HotKeys::weapon.damageMu , 1 , 10);
-                        ImGui::SliderInt("射速倍率" , &HotKeys::weapon.fireSpeedMu , 1 , 10);
+                        ImGui::SliderFloat("伤害倍率" , &HotKeys::weapon.damageMu , 1 , 10);
+                        ImGui::SliderFloat("射速倍率" , &HotKeys::weapon.fireSpeedMu , 1 , 10);
                         PopFont();
                     }
                     e_elements::end_child();

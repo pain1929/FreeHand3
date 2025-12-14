@@ -4,8 +4,14 @@
 #include "NamePainter.h"
 #include "HotKeys.h"
 #include "utils/utils.h"
-
+#include <unordered_map>
 static void * Origin_Render;
+
+struct WeaponMdf {
+    float speedX{1.f};
+    float damageX{1.f};
+};
+
 
 inline bool IsHit(const SDK::FVector &pos, SDK::UWorld *world, const SDK::FVector &camLoc) {
     SDK::FHitResult hitResult{};
@@ -25,30 +31,25 @@ inline bool IsHit(const SDK::FVector &pos, SDK::UWorld *world, const SDK::FVecto
 
 
 inline void Modifys() {
+    static std::unordered_map<SDK::AWeapon *  , WeaponMdf> mdfs;
+    if (!g_cheat->character) {
+        return;
+    }
     auto weapon = g_cheat->character->GetActiveWeapon(0);
+
     if (weapon && weapon->CurrentFireComponent) {
+        auto &mif = mdfs[weapon];
+        weapon->CurrentFireComponent->FireRate.Value =
+            weapon->CurrentFireComponent->FireRate.Value / mif.speedX * HotKeys::weapon.fireSpeedMu;
 
-        static int f{};
-        static int d{};
-        static void * lastComp = nullptr;
+        weapon->CurrentFireComponent->Damage.Value =  weapon->CurrentFireComponent->Damage.Value / mif.damageX * HotKeys::weapon.damageMu;
 
-        if (lastComp && lastComp !=weapon->CurrentFireComponent) {
-            lastComp = nullptr;
-        }
-
-        if (!lastComp) {
-            f = weapon->CurrentFireComponent->FireRate.Value;
-            d = weapon->CurrentFireComponent->Damage.Value;
-            lastComp = weapon->CurrentFireComponent;
-        }
-
-
-        weapon->CurrentFireComponent->FireRate.Value = f * HotKeys::weapon.fireSpeedMu;
-        weapon->CurrentFireComponent->Damage.Value *= d * HotKeys::weapon.damageMu;
-
+        mif.damageX = HotKeys::weapon.damageMu;
+        mif.speedX = HotKeys::weapon.fireSpeedMu;
     }
 
-    if (g_cheat->character &&  g_cheat->character->OakCharacterMovement) {
+
+    if (g_cheat->character->OakCharacterMovement) {
         static void * lastMove = nullptr;
         static float w{};
         static float f{};
