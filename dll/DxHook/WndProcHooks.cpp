@@ -27,7 +27,7 @@ static LRESULT hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
     ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
 
-    if (HotKeys::Menu::showMenu) {
+    if (MainMenu::showMenu) {
         switch (uMsg) {
         case WM_MOUSEMOVE:
         case WM_NCMOUSEMOVE:
