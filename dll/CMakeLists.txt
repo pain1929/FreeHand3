@@ -93,6 +93,12 @@ add_library(${PROJECT_NAME} SHARED DllMain.cpp
         DxHook/RangeDraw.h
         DxHook/EspDraw.hpp
         DxHook/EspDraw.cpp
+        ../lib/CrashLogs.cpp
+        ../lib/CrashLogs.h
+        DxHook/D3d11Hook2.cpp
+        DxHook/WndProcHooks.cpp
+        DxHook/WndProcHooks.h
+        DxHook/D3d11Hook2.h
 )
 
 

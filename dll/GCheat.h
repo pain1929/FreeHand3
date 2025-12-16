@@ -6,11 +6,12 @@
 #define GCHEAT_H
 #include "DxHook/namespaces.h"
 #include "config.h"
-
+#include "DxHook/WndProcHooks.h"
 class GCheat {
     void engineInit();
     void drawInit();
 public:
+    std::shared_ptr<WndProcHooks> wnd_proc_hooks;
     SDK::UEngine * engine;
     SDK::AOakCharacter * character{};
     SDK::AOakPlayerController * controller{};

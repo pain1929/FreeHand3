@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <iostream>
 #include "GCheat.h"
+#include "CrashLogs.h"
 static void CreateConsoleWindow() {
     if (AllocConsole()) {
         FILE* file;
@@ -15,6 +16,8 @@ static void CreateConsoleWindow() {
 
 void* Dll = nullptr;
 void ClearingThread() {
+    glaiel::crashlogs::set_crashlog_folder("c:/.xanax/crash_logs/bl3");
+    glaiel::crashlogs::begin_monitoring();
 
      try {
             MH_Initialize();

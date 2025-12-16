@@ -11,6 +11,7 @@
 #include "../lib/pattern_scan.hpp"
 #include "HotKeys.h"
 #include "utils/NamePool.hpp"
+#include "D3d11Hook2.h"
 GCheat * g_cheat = new GCheat;
 
 using IsInitFn = bool (*)();
@@ -113,46 +114,38 @@ void GCheat::init() {
     HotKeys::Cfg::LoadCfg();
 
 
-    this->title = xorstr_("正在初始化绘制...");
-    drawInit();
-    this->title = xorstr_("正在初始化UE结构...");
     engineInit();
-    this->title = xorstr_("正在初始化钩子...");
-    IHook::init();
-    this->title = xorstr_("初始化完成等待中...");
-
-
-
-
     auto apiName = g_cheat->engine->GameUserSettings->GetPreferredGraphicsAPI().ToString();
-    if (apiName == "DX12") {
-        hooks::Init();
-        if (WaitForInitialization(d3d12hook::IsInitialized , 50 , 300))
-        {
-            globals::activeBackend = globals::Backend::DX12;
-        }
-        else {
-            throw std::runtime_error(xorstr_("gui inited failed dx12"));
-        }
-    } else {
-        //初始化11
-        hooks_dx11::Init();
+    if (apiName == "DX11") {
+       //初始化窗口
+       wnd_proc_hooks = std::make_shared<WndProcHooks>();
+       if (!wnd_proc_hooks->Setup()) {
+           throw std::runtime_error("wnd_proc_hooks error");
+       }
 
-        if (WaitForInitialization(hooks_dx11::IsInitialized , 50 , 300))
-        {
-            globals::activeBackend = globals::Backend::DX11;
-        }
-        else {
-            throw std::runtime_error(xorstr_("gui inited failed dx11"));
-        }
+       if (!D3D11Setup()) {
+           throw std::runtime_error("dx11 初始化失败");
+       }
+
+    } else {
+        throw std::runtime_error("请把游戏画面设置中图形API调整到DX11再进行注入");
     }
 
-    this->title = std::string(xorstr_("自由之手3 ")) + (globals::activeBackend == globals::Backend::DX11 ? "DX11 " : "DX12 ") + CURRENT_VERSION;
 
+    this->title = xorstr_("正在初始化绘制...");
+    Sleep(3000);
+    drawInit();
+    this->title = xorstr_("正在初始化钩子...");
+    Sleep(3000);
+    IHook::init();
+    this->title = std::string(xorstr_("自由之手3 ")) + CURRENT_VERSION;
 }
 
 void GCheat::remove() {
-    inputhook::Remove(globals::mainWindow);
+    if (wnd_proc_hooks) {
+        wnd_proc_hooks->Destroy();
+    }
+    D3D11Destroy();
     MH_RemoveHook(MH_ALL_HOOKS);
     MH_Uninitialize();
 }

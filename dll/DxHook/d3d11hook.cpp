@@ -39,11 +39,13 @@ namespace hooks_dx11 {
             else
             {
                 //DebugLog("[d3d11hook] CreateRenderTarget failed: 0x%08X\n", hr);
+                throw std::runtime_error("[d3d11hook] CreateRenderTarget failed " + std::to_string(hr));
             }
         }
         else
         {
             //DebugLog("[d3d11hook] CreateRenderTarget failed: swapchain buffer unavailable\n");
+            throw std::runtime_error("[d3d11hook] CreateRenderTarget failed: swapchain buffer unavailable");
         }
     }
 
@@ -239,6 +241,7 @@ namespace hooks_dx11 {
         else
         {
             //DebugLog("[d3d11hook] D3D11CreateDeviceAndSwapChain failed: 0x%08X\n", hr);
+            throw std::runtime_error("[d3d11hook] D3D11CreateDeviceAndSwapChain failed " + std::to_string(hr));
         }
 
         DestroyWindow(hwnd);

@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 project(FreeHand3 VERSION 1.0.1)
 
-set(CMAKE_CXX_STANDARD  20)
+set(CMAKE_CXX_STANDARD  23)
 if (MSVC)
     #add_compile_options(/wd4369 /wd4309 /wd4828)
-    add_compile_options(/bigobj)
+    #add_compile_options(/bigobj)
+    add_link_options("$<$<NOT:$<CONFIG:Debug>>:/DEBUG>")
     add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
     add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
