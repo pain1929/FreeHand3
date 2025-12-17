@@ -116,7 +116,16 @@ void GCheat::init() {
 
     engineInit();
     auto apiName = g_cheat->engine->GameUserSettings->GetPreferredGraphicsAPI().ToString();
-    if (apiName == "DX11") {
+    if (apiName == "DX12") {
+        hooks::Init();
+        if (WaitForInitialization(d3d12hook::IsInitialized , 50 , 300))
+        {
+            globals::activeBackend = globals::Backend::DX12;
+        }
+        else {
+            throw std::runtime_error(xorstr_("gui inited failed dx12"));
+        }
+    } else {
         //初始化11
         hooks_dx11::Init();
 
@@ -127,9 +136,6 @@ void GCheat::init() {
         else {
             throw std::runtime_error(xorstr_("gui inited failed dx11"));
         }
-
-    } else {
-        throw std::runtime_error("请把游戏画面设置中图形API调整到DX11再进行注入");
     }
 
 
