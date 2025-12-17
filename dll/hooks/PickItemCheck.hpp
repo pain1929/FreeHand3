@@ -8,6 +8,7 @@
 extern "C" void PickItemCheckHook();
 class PickItemCheck : public IHook {
 public:
+    PickItemCheck();
     void *getDetour() override {
         return PickItemCheckHook;
     }

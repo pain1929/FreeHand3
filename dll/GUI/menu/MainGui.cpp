@@ -312,6 +312,9 @@ void MainMenu::render() {
                         ImGui::Checkbox("飞行模式" , &HotKeys::player.flyMode);
                         ImGui::SliderInt("移动速度倍率" , &HotKeys::player.walkSpeedMu , 1, 10);
                         ImGui::SliderInt("飞行速度倍率" , &HotKeys::player.flySpeedMu , 1, 10);
+                        ImGui::Checkbox("无限拾取" , &HotKeys::player.pickUpItemInf);
+                        ImGui::Checkbox("无限制打开ECHO" , &HotKeys::player.anyWhereEcho);
+                        ImGui::Checkbox("传送到标记点" , &HotKeys::player.tpToMarkPoint);
                         PopFont();
                     }
                     e_elements::end_child();

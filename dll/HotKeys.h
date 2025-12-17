@@ -45,7 +45,10 @@ struct Player {
     bool flyMode{false};
     int walkSpeedMu{1}; //!<移动速度倍率
     int flySpeedMu{1}; //!<飞行速度倍率
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Player , flyMode  , walkSpeedMu , flySpeedMu)
+    bool anyWhereEcho{false};
+    bool tpToMarkPoint{false};
+    bool pickUpItemInf{false};
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Player , flyMode  , walkSpeedMu , flySpeedMu , anyWhereEcho , tpToMarkPoint , pickUpItemInf)
 };
 
 

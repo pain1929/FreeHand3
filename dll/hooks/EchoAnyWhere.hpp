@@ -7,7 +7,10 @@ inline void *Origin_EchoAnyWhere;
 
 inline bool __fastcall Hook_EchoAnyWhere(int64_t a1 , int64_t a2) {
     using FN = bool (__fastcall *) (int64_t a1 , int64_t a2);
-    ((FN)Origin_EchoAnyWhere)(a1 ,a2);
+    auto ret = ((FN)Origin_EchoAnyWhere)(a1 ,a2);
+    if (!HotKeys::player.anyWhereEcho) {
+        return ret;
+    }
     return true;
 }
 

@@ -1,9 +1,12 @@
 .CODE
 
 EXTERN Origin_PickItemCheck:QWORD
-
+EXTERN pickupItemEnable:QWORD
 PickItemCheckHook PROC
-    mov dword ptr [rcx+240],0
+    cmp byte ptr [pickupItemEnable],0
+    je quit
+    mov dword ptr [rcx+240h],0
+quit:
     jmp Origin_PickItemCheck
 PickItemCheckHook ENDP
 
