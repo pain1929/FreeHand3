@@ -7,17 +7,13 @@
 
 inline void * Origin_PickItemCheck;
 
-inline bool __fastcall Hook_PickItemCheck(int64_t a1, int32_t a2 , int32_t a3 , int64_t a4) {
-    using FN = bool (__fastcall * ) (int64_t a1, int32_t a2 , int32_t a3 , int64_t a4);
-    ((FN)Origin_PickItemCheck)(a1 ,a2 ,a3 ,a4);
-    return true;
-}
+extern "C" void * PickItemCheckHook;
 
 
 class PickItemCheck : public IHook {
 public:
     void *getDetour() override {
-        return Hook_PickItemCheck;
+        return PickItemCheckHook;
     }
     void **getOrigin() override {
         return &Origin_PickItemCheck;
@@ -25,6 +21,6 @@ public:
 
     void *getTarget() override {
         return Scanner::PatternScan(xorstr_("Borderlands3.exe") ,
-            xorstr_("? 89 58 08 ? 89 68 10 ? 89 70 18 ? 89 78 20 41 56 ? 83 ec 30 49 8b e9 45 8b f0"));
+            xorstr_("? ? ? ? 00 00 ? 03 ? 01 c3 32 c0 c3 cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc 48 85 c9 ? 15 ? ? ? ? 01 00 00"));
     }
 };

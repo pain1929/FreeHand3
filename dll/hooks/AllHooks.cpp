@@ -12,7 +12,7 @@ void IHook::init() {
     registerHook(std::make_shared<PostRender>());
     registerHook(std::make_shared<GetViewAngle>());
     registerHook(std::make_shared<Shoot>());
-    //registerHook(std::make_shared<PickItemCheck>());
+    registerHook(std::make_shared<PickItemCheck>());
     registerHook(std::make_shared<EchoAnyWhere>());
 
     for (const auto & h : hooks) {
