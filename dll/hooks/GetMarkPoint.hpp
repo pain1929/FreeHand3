@@ -13,7 +13,10 @@ public:
     void *getDetour() override;
     void **getOrigin() override;
     void *getTarget() override {
-        return Scanner::PatternScan(xorstr_("Borderlands3.exe") ,
-            xorstr_("? ? ? ? 02 00 00 0f 28 c1 ? 0f 11 4d f0 ? c6 c1 55 ? c6 c9 aa ? 0f 11 4d f8 ? 0f 11 45 f4 ? 16 ? ? ? ? ec 7c 5e 05 ? ? ? ? 5e 05 ? 0f 11 45 f0"));
+        //0x12cdf00  0x12ce079
+        auto func =  (char * )Scanner::PatternScan(xorstr_("Borderlands3.exe") ,
+            xorstr_("? 89 5c 24 18 ? 89 7c 24 20 55 48 8b ec ? 83 ec 40 ? ? ? ? 01 00 00 48 8b d9"));
+
+        return func + 0x12ce079 - 0x12cdf00;
     }
 };
