@@ -5,19 +5,13 @@
 #include "xorstr.hpp"
 #include "IHook.h"
 
-inline void * Origin_PickItemCheck;
-
-extern "C" void * PickItemCheckHook;
-
-
+extern "C" void PickItemCheckHook();
 class PickItemCheck : public IHook {
 public:
     void *getDetour() override {
         return PickItemCheckHook;
     }
-    void **getOrigin() override {
-        return &Origin_PickItemCheck;
-    }
+    void **getOrigin() override;
 
     void *getTarget() override {
         return Scanner::PatternScan(xorstr_("Borderlands3.exe") ,

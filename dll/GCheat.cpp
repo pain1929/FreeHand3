@@ -117,15 +117,16 @@ void GCheat::init() {
     engineInit();
     auto apiName = g_cheat->engine->GameUserSettings->GetPreferredGraphicsAPI().ToString();
     if (apiName == "DX11") {
-       //初始化窗口
-       wnd_proc_hooks = std::make_shared<WndProcHooks>();
-       if (!wnd_proc_hooks->Setup()) {
-           throw std::runtime_error("wnd_proc_hooks error");
-       }
+        //初始化11
+        hooks_dx11::Init();
 
-       if (!D3D11Setup()) {
-           throw std::runtime_error("dx11 初始化失败");
-       }
+        if (WaitForInitialization(hooks_dx11::IsInitialized , 50 , 300))
+        {
+            globals::activeBackend = globals::Backend::DX11;
+        }
+        else {
+            throw std::runtime_error(xorstr_("gui inited failed dx11"));
+        }
 
     } else {
         throw std::runtime_error("请把游戏画面设置中图形API调整到DX11再进行注入");
@@ -142,10 +143,7 @@ void GCheat::init() {
 }
 
 void GCheat::remove() {
-    if (wnd_proc_hooks) {
-        wnd_proc_hooks->Destroy();
-    }
-    //D3D11Destroy();
+    inputhook::Remove(globals::mainWindow);
     MH_RemoveHook(MH_ALL_HOOKS);
     MH_Uninitialize();
 }

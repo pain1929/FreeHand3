@@ -5,6 +5,7 @@
 #include "Shoot.hpp"
 #include "PickItemCheck.hpp"
 #include "EchoAnyWhere.hpp"
+#include "GetMarkPoint.hpp"
 std::set<std::shared_ptr<IHook>> IHook::hooks;
 
 void IHook::init() {
@@ -14,6 +15,7 @@ void IHook::init() {
     registerHook(std::make_shared<Shoot>());
     registerHook(std::make_shared<PickItemCheck>());
     registerHook(std::make_shared<EchoAnyWhere>());
+    //registerHook(std::make_shared<GetMarkPoint>());
 
     for (const auto & h : hooks) {
        h->hook();

@@ -16,8 +16,10 @@ static void CreateConsoleWindow() {
 
 void* Dll = nullptr;
 void ClearingThread() {
+#ifndef _DEBUG
     glaiel::crashlogs::set_crashlog_folder("c:/.xanax/crash_logs/bl3");
     glaiel::crashlogs::begin_monitoring();
+#endif
 
      try {
             MH_Initialize();
