@@ -145,7 +145,7 @@ void GCheat::remove() {
     if (wnd_proc_hooks) {
         wnd_proc_hooks->Destroy();
     }
-    D3D11Destroy();
+    //D3D11Destroy();
     MH_RemoveHook(MH_ALL_HOOKS);
     MH_Uninitialize();
 }
