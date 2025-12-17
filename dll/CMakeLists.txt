@@ -101,9 +101,10 @@ add_library(${PROJECT_NAME} SHARED DllMain.cpp
         DxHook/D3d11Hook2.h
         hooks/PickItemCheck.hpp
         hooks/EchoAnyWhere.hpp
-        hooks/PickItemCheckHook.asm
         hooks/GetMarkPoint.hpp
         hooks/PickItemCheck.cpp
+        hooks/hooks.asm
+        hooks/GetMarkPoint.cpp
 )
 
 

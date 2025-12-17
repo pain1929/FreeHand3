@@ -15,7 +15,7 @@ void IHook::init() {
     registerHook(std::make_shared<Shoot>());
     registerHook(std::make_shared<PickItemCheck>());
     registerHook(std::make_shared<EchoAnyWhere>());
-    //registerHook(std::make_shared<GetMarkPoint>());
+    registerHook(std::make_shared<GetMarkPoint>());
 
     for (const auto & h : hooks) {
        h->hook();
