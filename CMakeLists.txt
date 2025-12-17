@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(FreeHand3 VERSION 1.0.2)
+project(FreeHand3 VERSION 1.1.0)
 enable_language(ASM_MASM)
 set(CMAKE_CXX_STANDARD  23)
 if (MSVC)
